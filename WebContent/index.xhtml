@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+	<h:form id="heroForm">
+		<p:dataTable id="heroTable" value="#{heroBean.heroes}" var="h"
+			sortBy="#{h.fullname}">
+			<f:facet name="header">SuperHeroes</f:facet>
+			<p:column headerText="Name:">
+				<h:outputText value="#{h.fullname}" />
+			</p:column>
+
+			<p:column headerText="Race:">
+				<h:outputText value="#{h.race}" />
+			</p:column>
+
+			<p:column headerText="Gendar:">
+				<h:outputText value="#{h.gender}" />
+			</p:column>
+
+			<p:column headerText="Faction:">
+				<h:outputText value="#{h.fraction.fractionname}" />
+			</p:column>
+
+			<p:column headerText="Univers:">
+				<h:outputText value="#{h.universe.universenname}" />
+			</p:column>
+
+			<p:column headerText="Abilities:">
+				<p:dataList value="#{h.abilities}" var="abi">
+					<h:outputText value="#{abi.abilitiesname}" />
+				</p:dataList>
+			</p:column>
+
+			<p:column headerText="">
+				<p:commandButton icon="ui-icon-pencil" />
+				/
+				<p:commandButton icon="ui-icon-trash"
+					action="#{heroBean.removeHero(h)}" update="heroTable" />
+
+			</p:column>
+			<f:facet name="footer">
+				<p:commandButton value="Add" icon="ui-icon-plus"
+					oncomplete="PF('add').show();" update="heroForm:add"
+					action="#{heroBean.createNewHero}" />
+			</f:facet>
+		</p:dataTable>
+		<p:messages id="msgs" autoUpdate="true" />
+
+		<p:dialog header="Add New Hero" dynamic="true" id="add"
+			widgetVar="add" showEffect="explode" hideEffect="explode"
+			height="25%" width="50%">
+
+			<p:panelGrid columns="3"
+				columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-8"
+				cellpadding="5" layout="grid" styleClass="ui-panelgrid-blank">
+
+				<p:outputLabel value="Name: " />
+				<p:inputText id="inputName" value="#{heroBean.newHero.fullname}">
+					<f:validateLength minimum="0" />
+				</p:inputText>
+				<p:message for="inputName" display="icon" />
+
+				<p:outputLabel value="Race: " />
+				<p:inputText id="inputRace" value="#{heroBean.newHero.race}">
+					<f:validateLength minimum="0" />
+				</p:inputText>
+				<p:message for="inputRace" id="msgRace" display="icon" />
+
+				<p:outputLabel value="Gender: " />
+				<p:inputText id="inputGender" value="#{heroBean.newHero.gender}">
+					<f:validateLength minimum="0" />
+				</p:inputText>
+				<p:message for="inputGender" id="msgGender" display="icon" />
+			</p:panelGrid>
+			<p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10"
+				cellpadding="5" layout="grid" styleClass="ui-panelgrid-blank">
+
+				<p:outputLabel value="Faction" />
+				<p:selectOneMenu id="factionmenu" value="#{heroBean.newHero.fraction}"
+					converter="fractionConverter">
+					<f:selectItems value="#{heroBean.fractions}" var="fraction"
+						itemLabel="#{fraction.fractionname}" itemValue="#{fraction}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Universe" />
+				<p:selectOneMenu id="universemenu" value="#{heroBean.newHero}"
+					converter="universeConverter">
+					<f:selectItems value="#{heroBean.universes}" var="universes"
+					itemLabel="#{universes.universenname}" itemValue="#{universes}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Abilities" />
+				<p:selectOneMenu id="Abilitiesmenu">
+					<f:selectItem itemLabel="Marvel" itemValue="Marvel" />
+					<f:selectItem itemLabel="DC" itemValue="DC" />
+				</p:selectOneMenu>
+			</p:panelGrid>
+
+			<p:outputPanel style="text-align: left;">
+				<p:commandButton value="Save" update="heroTable"
+					action="#{heroBean.saveNewHero}" oncomplete="PF('add').hide();" />
+			</p:outputPanel>
+
+		</p:dialog>
+	</h:form>
+</h:body>
+</html>
+
+<!-- 
+Gör så att man kan adda till databas
+out of sync??
+Gör så att man kan remova från databas
+gör så att man kan editera databas 
+how to take all the information from dialog to save on DB
+-->
