@@ -37,6 +37,10 @@ public class Hero {
 	public Hero() {
 	}
 
+	public Hero(Fraction fraction2) {
+		this.fraction = fraction2;
+	}
+
 	public Universe getUniverse() {
 		return universe;
 	}

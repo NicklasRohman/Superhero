@@ -7,7 +7,7 @@ import javax.faces.convert.FacesConverter;
 import backing.HeroBean;
 import entites.Fraction;
 
-@FacesConverter("fractionConverter")
+@FacesConverter(forClass=Fraction.class,value="fractionConverter")
 public class FractionConverter  implements Converter {
 
 	@Override
@@ -19,6 +19,8 @@ public class FractionConverter  implements Converter {
 			return "";
 		}
 		HeroBean bb = context.getApplication().evaluateExpressionGet(context, "#{heroBean}", HeroBean.class);
+		
+		System.out.println("System out print " + bb.getFractions().get(id).getFractionname() );
 		return bb.getFractionEJB().find(id);
 	}
 

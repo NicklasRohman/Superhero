@@ -39,22 +39,25 @@
 			</p:column>
 
 			<p:column headerText="">
-				<p:commandButton icon="ui-icon-pencil" />
+				<!-- rendered="#{request.isUserInRole('admin')}" -->
+				<p:commandButton icon="ui-icon-pencil"
+					/>
 				/
 				<p:commandButton icon="ui-icon-trash"
 					action="#{heroBean.removeHero(h)}" update="heroTable" />
 
 			</p:column>
 			<f:facet name="footer">
-				<p:commandButton value="Add" icon="ui-icon-plus"
-					oncomplete="PF('add').show();" update="heroForm:add"
+				<p:commandButton value="Create" icon="ui-icon-plus"
+					oncomplete="PF('create').show();" update="heroForm:create"
 					action="#{heroBean.createNewHero}" />
+				<!-- rendered="#{request.isUserInRole('admin')}" -->
 			</f:facet>
 		</p:dataTable>
 		<p:messages id="msgs" autoUpdate="true" />
 
-		<p:dialog header="Add New Hero" dynamic="true" id="add"
-			widgetVar="add" showEffect="explode" hideEffect="explode"
+		<p:dialog header="Create New Hero" dynamic="true" id="create"
+			widgetVar="create" showEffect="explode" hideEffect="explode"
 			height="25%" width="50%">
 
 			<p:panelGrid columns="3"
@@ -83,32 +86,33 @@
 				cellpadding="5" layout="grid" styleClass="ui-panelgrid-blank">
 
 				<p:outputLabel value="Faction" />
-				<p:selectOneMenu id="factionmenu" value="#{heroBean.newHero.fraction}"
-					converter="fractionConverter">
+				<p:selectOneMenu id="factionmenu"
+					value="heroBean.newHero.fraction}" converter="fractionConverter">
+					<!-- <f:selectItem itemLabel="Good" itemValue="0" /> -->
 					<f:selectItems value="#{heroBean.fractions}" var="fraction"
 						itemLabel="#{fraction.fractionname}" itemValue="#{fraction}" />
-				</p:selectOneMenu>
+				</p:selectOneMenu> 
 
-				<p:outputLabel value="Universe" />
+<!-- 				<p:outputLabel value="Universe" />
 				<p:selectOneMenu id="universemenu" value="#{heroBean.newHero}"
 					converter="universeConverter">
-					<f:selectItems value="#{heroBean.universes}" var="universes"
-					itemLabel="#{universes.universenname}" itemValue="#{universes}" />
+					<f:selectItems value="heroBean.universes}" var="universes"
+						itemLabel="#{universes.universenname}" itemValue="#{universes}" />
 				</p:selectOneMenu>
 
 				<p:outputLabel value="Abilities" />
 				<p:selectOneMenu id="Abilitiesmenu">
 					<f:selectItem itemLabel="Marvel" itemValue="Marvel" />
 					<f:selectItem itemLabel="DC" itemValue="DC" />
-				</p:selectOneMenu>
+				</p:selectOneMenu>--> 
 			</p:panelGrid>
 
 			<p:outputPanel style="text-align: left;">
-				<p:commandButton value="Save" update="heroTable"
-					action="#{heroBean.saveNewHero}" oncomplete="PF('add').hide();" />
+				<p:commandButton value="Save" 
+					action="#{heroBean.saveNewHero}" oncomplete="PF('create').hide();" />
 			</p:outputPanel>
-
 		</p:dialog>
+
 	</h:form>
 </h:body>
 </html>

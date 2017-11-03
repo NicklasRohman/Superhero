@@ -15,7 +15,7 @@ public class UniverseFacade extends AbstractFacades<Universe> {
 	protected EntityManager getEntityManager() {
 		return em;
 	}
-
+	
 	public UniverseFacade() {
 		super(Universe.class);
 	}
