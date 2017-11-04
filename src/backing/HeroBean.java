@@ -53,18 +53,17 @@ public class HeroBean implements Serializable {
 	}
 
 	public void createNewHero() {
-		newHero = new Hero();
+		Fraction frac= new Fraction();
+		newHero = new Hero(frac);
+		
 		System.out.println("CreateNewHero");
 	}
 
 	public void saveNewHero() {
 		System.out.println("trying to make heroEJB");
 		
-		
 		heroEJB.create(newHero);
 		heros.add(newHero);
-		
-		System.out.println(fractions.get(newHero.getFraction().getFractionid()));
 	}
 
 	public void removeHero(Hero h) {

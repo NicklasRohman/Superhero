@@ -54,6 +54,9 @@
 				<!-- rendered="#{request.isUserInRole('admin')}" -->
 			</f:facet>
 		</p:dataTable>
+
+
+
 		<p:messages id="msgs" autoUpdate="true" />
 
 		<p:dialog header="Create New Hero" dynamic="true" id="create"
@@ -82,17 +85,17 @@
 				</p:inputText>
 				<p:message for="inputGender" id="msgGender" display="icon" />
 			</p:panelGrid>
+
 			<p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10"
 				cellpadding="5" layout="grid" styleClass="ui-panelgrid-blank">
 
-				<p:outputLabel value="Faction" />
+ 				<p:outputLabel value="Faction" />
 				<p:selectOneMenu id="factionmenu"
-					value="heroBean.newHero.fraction}" converter="fractionConverter">
-					<!-- <f:selectItem itemLabel="Good" itemValue="0" /> -->
+					value="#{heroBean.newHero.fraction}" converter="fractionConverter" converterMessage="Fail to Convert" validatorMessage="Fail to validade">
 					<f:selectItems value="#{heroBean.fractions}" var="fraction"
 						itemLabel="#{fraction.fractionname}" itemValue="#{fraction}" />
 				</p:selectOneMenu> 
-
+				
 <!-- 				<p:outputLabel value="Universe" />
 				<p:selectOneMenu id="universemenu" value="#{heroBean.newHero}"
 					converter="universeConverter">

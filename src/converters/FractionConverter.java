@@ -20,7 +20,6 @@ public class FractionConverter  implements Converter {
 		}
 		HeroBean bb = context.getApplication().evaluateExpressionGet(context, "#{heroBean}", HeroBean.class);
 		
-		System.out.println("System out print " + bb.getFractions().get(id).getFractionname() );
 		return bb.getFractionEJB().find(id);
 	}
 
