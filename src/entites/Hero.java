@@ -97,5 +97,5 @@ public class Hero {
 	public void setAbilities(List<Abilities> abilities) {
 		this.abilities = abilities;
 	}
-
+	
 }

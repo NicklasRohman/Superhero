@@ -7,6 +7,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import entites.Hero;
 
+
+
 @Stateless
 @DeclareRoles({"admin","hero"})
 public class HeroFacade extends AbstractFacades<Hero>{

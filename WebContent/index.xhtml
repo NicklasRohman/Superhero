@@ -10,10 +10,22 @@
 <h:body>
 	<h:form id="heroForm">
 		<p:dataTable id="heroTable" value="#{heroBean.heroes}" var="h"
-			sortBy="#{h.fullname}">
+			editMode="cell" editable="true" >
+		
+			<p:messages autoUpdate="true"/>
 			<f:facet name="header">SuperHeroes</f:facet>
 			<p:column headerText="Name:">
-				<h:outputText value="#{h.fullname}" />
+				<p:cellEditor >
+					<f:facet name="output">
+						<h:outputText value="#{h.fullname}" />
+					</f:facet>
+					<f:facet name="input" >
+						<p:inputText value="#{h.fullname}" rendered="#{request.isUserInRole('admin')}" >
+							<p:ajax event="change" listener="#{heroBean.editHero(h)}"
+								update="heroTable" />
+						</p:inputText>
+					</f:facet>
+				</p:cellEditor>
 			</p:column>
 
 			<p:column headerText="Race:">
@@ -39,23 +51,19 @@
 			</p:column>
 
 			<p:column headerText="" rendered="#{request.isUserInRole('admin')}">
-			
-				<p:commandButton icon="ui-icon-pencil"
-					/>
-				/
+
 				<p:commandButton icon="ui-icon-trash"
 					action="#{heroBean.removeHero(h)}" update="heroTable" />
 
 			</p:column>
 			<f:facet name="footer">
-				<p:commandButton value="Create" icon="ui-icon-plus" update="heroForm:create"
-				oncomplete="PF('create').show();" 
-					action="#{heroBean.createNewHero}" rendered="#{request.isUserInRole('admin')}"/>
-				
+				<p:commandButton value="Create" icon="ui-icon-plus"
+					update="heroForm:create" oncomplete="PF('create').show();"
+					action="#{heroBean.createNewHero}"
+					rendered="#{request.isUserInRole('admin')}" />
+
 			</f:facet>
 		</p:dataTable>
-
-
 
 		<p:messages id="msgs" autoUpdate="true" />
 
@@ -64,39 +72,42 @@
 			height="25%" width="50%">
 
 			<p:outputPanel rendered="#{heroBean.newHero != null}">
-			<p:panelGrid columns="3"
-				columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-8"
-				cellpadding="5" layout="grid" styleClass="ui-panelgrid-blank">
+				<p:panelGrid columns="3"
+					columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-8"
+					cellpadding="5" layout="grid" styleClass="ui-panelgrid-blank">
 
-				<p:outputLabel value="Name: " />
-				<p:inputText id="inputName" value="#{heroBean.newHero.fullname}">
-					<f:validateLength minimum="0" />
-				</p:inputText>
-				<p:message for="inputName" display="icon" />
+					<p:outputLabel value="Name: " />
+					<p:inputText id="inputName" value="#{heroBean.newHero.fullname}">
+						<f:validateLength minimum="0" />
+					</p:inputText>
+					<p:message for="inputName" display="icon" />
 
-				<p:outputLabel value="Race: " />
-				<p:inputText id="inputRace" value="#{heroBean.newHero.race}">
-					<f:validateLength minimum="0" />
-				</p:inputText>
-				<p:message for="inputRace" id="msgRace" display="icon" />
+					<p:outputLabel value="Race: " />
+					<p:inputText id="inputRace" value="#{heroBean.newHero.race}">
+						<f:validateLength minimum="0" />
+					</p:inputText>
+					<p:message for="inputRace" id="msgRace" display="icon" />
 
-				<p:outputLabel value="Gender: " />
-				<p:inputText id="inputGender" value="#{heroBean.newHero.gender}">
-					<f:validateLength minimum="0" />
-				</p:inputText>
-				<p:message for="inputGender" id="msgGender" display="icon" />
-			</p:panelGrid>
+					<p:outputLabel value="Gender: " />
+					<p:inputText id="inputGender" value="#{heroBean.newHero.gender}">
+						<f:validateLength minimum="0" />
+					</p:inputText>
+					<p:message for="inputGender" id="msgGender" display="icon" />
+				</p:panelGrid>
 
-			<p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10"
-				cellpadding="5" layout="grid" styleClass="ui-panelgrid-blank">
+				<p:panelGrid columns="2"
+					columnClasses="ui-grid-col-2,ui-grid-col-10" cellpadding="5"
+					layout="grid" styleClass="ui-panelgrid-blank">
 
- 				<p:outputLabel value="Faction" />
-				<p:selectOneMenu id="factionmenu"
-					value="#{heroBean.newHero.fraction}" converter="fractionConverter" converterMessage="Fail to Convert" validatorMessage="Fail to validade">
-					<f:selectItems value="#{heroBean.fractions}" var="fraction"
-						itemLabel="#{fraction.fractionname}" itemValue="#{fraction}" />
-				</p:selectOneMenu> 
-<!-- 				<p:outputLabel value="Universe" />
+					<p:outputLabel value="Faction" />
+					<p:selectOneMenu id="factionmenu"
+						value="#{heroBean.newHero.fraction}" converter="fractionConverter"
+						converterMessage="Fail to Convert"
+						validatorMessage="Fail to validade">
+						<f:selectItems value="#{heroBean.fractions}" var="fraction"
+							itemLabel="#{fraction.fractionname}" itemValue="#{fraction}" />
+					</p:selectOneMenu>
+					<!-- 				<p:outputLabel value="Universe" />
 				<p:selectOneMenu id="universemenu" value="#{heroBean.newHero}"
 					converter="universeConverter">
 					<f:selectItems value="heroBean.universes}" var="universes"
@@ -107,17 +118,17 @@
 				<p:selectOneMenu id="Abilitiesmenu">
 					<f:selectItem itemLabel="Marvel" itemValue="Marvel" />
 					<f:selectItem itemLabel="DC" itemValue="DC" />
-				</p:selectOneMenu>--> 
-			</p:panelGrid>
+				</p:selectOneMenu>-->
+				</p:panelGrid>
 
-			<p:outputPanel style="text-align: left;">
-				<p:commandButton value="Save" 
-					action="#{heroBean.saveNewHero}" oncomplete="PF('create').hide();" update="heroTable" />
-			</p:outputPanel>
+				<p:outputPanel style="text-align: left;">
+					<p:commandButton value="Save" action="#{heroBean.saveNewHero}"
+						oncomplete="PF('create').hide();" update="heroTable" />
+				</p:outputPanel>
 			</p:outputPanel>
 		</p:dialog>
-
 	</h:form>
+	
 </h:body>
 </html>
 
