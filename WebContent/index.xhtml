@@ -38,8 +38,8 @@
 				</p:dataList>
 			</p:column>
 
-			<p:column headerText="">
-				<!-- rendered="#{request.isUserInRole('admin')}" -->
+			<p:column headerText="" rendered="#{request.isUserInRole('admin')}">
+			
 				<p:commandButton icon="ui-icon-pencil"
 					/>
 				/
@@ -48,10 +48,10 @@
 
 			</p:column>
 			<f:facet name="footer">
-				<p:commandButton value="Create" icon="ui-icon-plus"
-					oncomplete="PF('create').show();" update="heroForm:create"
-					action="#{heroBean.createNewHero}" />
-				<!-- rendered="#{request.isUserInRole('admin')}" -->
+				<p:commandButton value="Create" icon="ui-icon-plus" update="heroForm:create"
+				oncomplete="PF('create').show();" 
+					action="#{heroBean.createNewHero}" rendered="#{request.isUserInRole('admin')}"/>
+				
 			</f:facet>
 		</p:dataTable>
 
@@ -59,10 +59,11 @@
 
 		<p:messages id="msgs" autoUpdate="true" />
 
-		<p:dialog header="Create New Hero" dynamic="true" id="create"
+		<p:dialog header="Create New Hero" id="create" dynamic="true"
 			widgetVar="create" showEffect="explode" hideEffect="explode"
 			height="25%" width="50%">
 
+			<p:outputPanel rendered="#{heroBean.newHero != null}">
 			<p:panelGrid columns="3"
 				columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-8"
 				cellpadding="5" layout="grid" styleClass="ui-panelgrid-blank">
@@ -95,7 +96,6 @@
 					<f:selectItems value="#{heroBean.fractions}" var="fraction"
 						itemLabel="#{fraction.fractionname}" itemValue="#{fraction}" />
 				</p:selectOneMenu> 
-				
 <!-- 				<p:outputLabel value="Universe" />
 				<p:selectOneMenu id="universemenu" value="#{heroBean.newHero}"
 					converter="universeConverter">
@@ -112,7 +112,8 @@
 
 			<p:outputPanel style="text-align: left;">
 				<p:commandButton value="Save" 
-					action="#{heroBean.saveNewHero}" oncomplete="PF('create').hide();" />
+					action="#{heroBean.saveNewHero}" oncomplete="PF('create').hide();" update="heroTable" />
+			</p:outputPanel>
 			</p:outputPanel>
 		</p:dialog>
 
@@ -121,9 +122,6 @@
 </html>
 
 <!-- 
-Gör så att man kan adda till databas
-out of sync??
-Gör så att man kan remova från databas
 gör så att man kan editera databas 
 how to take all the information from dialog to save on DB
 -->

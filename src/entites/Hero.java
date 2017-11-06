@@ -34,13 +34,6 @@ public class Hero {
 	@JoinColumn(name = "universeid", referencedColumnName = "universeid", nullable = false)
 	private Universe universe;
 
-	public Hero() {
-	}
-
-	public Hero(Fraction fraction2) {
-		this.fraction = fraction2;
-	}
-
 	public Universe getUniverse() {
 		return universe;
 	}

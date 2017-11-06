@@ -5,9 +5,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-
-import org.apache.jasper.tagplugins.jstl.ForEach;
-
 import entites.Fraction;
 import entites.Hero;
 import entites.Universe;
@@ -27,6 +24,26 @@ public class HeroBean implements Serializable {
 	@EJB
 	private UniverseFacade universeEJB;
 
+	public HeroFacade getHeroEJB() {
+		return heroEJB;
+	}
+
+	public void setHeroEJB(HeroFacade heroEJB) {
+		this.heroEJB = heroEJB;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public List<Hero> getHeros() {
+		return heros;
+	}
+
+	public void setUniverseEJB(UniverseFacade universeEJB) {
+		this.universeEJB = universeEJB;
+	}
+
 	private List<Hero> heros;
 	private List<Fraction> fractions;
 	private List<Universe> universes;
@@ -42,10 +59,10 @@ public class HeroBean implements Serializable {
 	}
 
 	public List<Hero> getHeroes() {
-	if (heros == null) {
-		heros = heroEJB.findAll();
-	}
-	return heros;
+		if (heros == null) {
+			heros = heroEJB.findAll();
+		}
+		return heros;
 	}
 
 	public Hero getNewHero() {
@@ -53,15 +70,11 @@ public class HeroBean implements Serializable {
 	}
 
 	public void createNewHero() {
-		Fraction frac= new Fraction();
-		newHero = new Hero(frac);
-		
-		System.out.println("CreateNewHero");
+		newHero = new Hero();
 	}
 
 	public void saveNewHero() {
 		System.out.println("trying to make heroEJB");
-		
 		heroEJB.create(newHero);
 		heros.add(newHero);
 	}
@@ -75,7 +88,6 @@ public class HeroBean implements Serializable {
 		heroEJB.edit(h);
 	}
 
-	
 	public void setHeros(List<Hero> hero) {
 		this.heros = hero;
 	}
@@ -110,5 +122,4 @@ public class HeroBean implements Serializable {
 	public UniverseFacade getUniverseEJB() {
 		return universeEJB;
 	}
-
 }

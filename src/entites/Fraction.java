@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Fraction {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "fractionid")
 	private int fractionid;
 
 	@Column(name = "fractionname")
@@ -17,32 +17,41 @@ public class Fraction {
 	private List<Hero> hero;
 	
 	public List<Hero> getHero() {
-		System.out.println("getHeroList");
 		return hero;
 	}
 	
 	public void setHero(List<Hero> hero) {
-		System.out.println("SetHeroList");
 		this.hero = hero;
 	}
 
 	public int getFractionid() {
-	System.out.println("getFractionID");
 		return fractionid;
 	}
 
 	public void setFractionid(int fractionid) {
-		System.out.println("setFractionID");
 		this.fractionid = fractionid;
 	}
 
 	public String getFractionname() {
-		System.out.println("getFractionNAME");
 		return fractionname;
 	}
 
 	public void setFractionname(String fractionname) {
-		System.out.println("SetFractionNAME");
 		this.fractionname = fractionname;
 	}
+	
+	@Override
+	public boolean equals(Object other) {
+	    return (other instanceof Fraction) && (fractionid != 0)
+	        ? fractionid == (((Fraction) other).fractionid)
+	        : (other == this);
+	}
+
+	@Override
+	public int hashCode() {
+	    return (fractionid != 0)
+	        ? (this.getClass().hashCode() + fractionid)
+	        : super.hashCode();
+	}
+
 }

@@ -17,6 +17,14 @@ public class FractionFacade extends AbstractFacades<Fraction> {
 		return em;
 	}
 	
+	public EntityManager getEm() {
+		return em;
+	}
+
+	public void setEm(EntityManager em) {
+		this.em = em;
+	}
+
 	public FractionFacade() {
 		super(Fraction.class);
 	}

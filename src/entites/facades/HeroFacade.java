@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 import entites.Hero;
 
 @Stateless
-//@DeclareRoles({"admin","hero"})
+@DeclareRoles({"admin","hero"})
 public class HeroFacade extends AbstractFacades<Hero>{
 	@PersistenceContext(unitName="superheroes")
 	private EntityManager em;
@@ -23,19 +23,19 @@ public class HeroFacade extends AbstractFacades<Hero>{
 	}
 	
 	@Override
-//	@RolesAllowed({"admin"})
+	@RolesAllowed({"admin"})
 	public void create(Hero entity) {
 		super.create(entity);
 	}
 
 	@Override
-//	@RolesAllowed({"admin"})
+	@RolesAllowed({"admin"})
 	public void edit(Hero entity) {
 		super.edit(entity);
 	}
 
 	@Override
-//	@RolesAllowed({"admin"})
+	@RolesAllowed({"admin"})
 	public void remove(Hero entity) {
 		super.remove(entity);
 	}
